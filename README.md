@@ -4,7 +4,8 @@ CyberClock streamlines time conversions across global time zones, which is cruci
 
 🔗 [LinkedIn Profile of Andrew Williams](https://www.linkedin.com/in/andrew-c-williams/)
 
-![CyberClock Screenshot](screenshot.png)
+![CyberClock Screenshot](https://github.com/andrewCwilliamsCyberSec/CyberClock/blob/main/dashboard_screenshot.PNG)
+
 
 ## 📦 Dependencies
 
