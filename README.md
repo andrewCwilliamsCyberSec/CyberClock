@@ -45,7 +45,6 @@ Please remember to make sure that the timezone strings are valid according to th
 
 📦 Clone the repository:
 ```bash
-Copy code
 git clone https://github.com/andrewCwilliamsCyberSec/CyberClock.git
 ```
 🔧 Navigate into the repository directory and install the required packages:
