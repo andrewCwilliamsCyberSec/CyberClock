@@ -41,22 +41,27 @@ Copy code
 To remove a timezone, delete the corresponding key-value pair from the dictionary.
 Please remember to make sure that the timezone strings are valid according to the pytz library.
 
+
 🚀 Setup
 
 📦 Clone the repository:
 ```bash
 git clone https://github.com/andrewCwilliamsCyberSec/CyberClock.git
 ```
+
 🔧 Navigate into the repository directory and install the required packages:
-bash
-Copy code
+```bash
 cd CyberClock
 pip install -r requirements.txt
+```
+
 🖥️ Run the Flask app:
-bash
-Copy code
+```bash
 python time_page.py
+```
+
 🌐 Visit http://127.0.0.1:5000/ in your browser to see CyberClock in action.
+
 🙌 Pull requests are welcome.
 For significant changes, please open an issue first to discuss your intentions and proposed modifications.
 
