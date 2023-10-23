@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CyberClock</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: {{ "white" if not dark_mode else "#343a40" }};
+            color: {{ "black" if not dark_mode else "#ffffff" }};
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .card {
+            background-color: {{ "#f8f9fa" if not dark_mode else "#212529" }};
+            border-radius: 15px;
+            transition: transform 0.2s;
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            color: {{ "black" if not dark_mode else "#01b4e4" }};
+        }
+
+        .btn {
+            margin: 3px;
+            border-radius: 20px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-info:hover {
+            background-color: #016c9a;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+        }
+        
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-5">CyberClock</h1>
+
+        <!-- Add Timezone Button -->
+        <form action="/add_timezone" method="post">
+            <div class="form-group">
+                <label for="timezone">Add Timezone:</label>
+                <select name="timezone" id="timezone" class="form-control">
+                    {% for tz in available_timezones %}
+                        <option>{{ tz }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-secondary mt-3">Add Timezone</button>
+            </div>
+        </form>
+
+        <div class="row">
+            {% for tz_name, data in times_data.items() %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow">
+                    <!-- X Button to Remove Timezone -->
+                    <span class="close-button" onclick="removeTimezone('{{ tz_name }}')">x</span>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ tz_name }}</h5>
+                        <p><strong>Date:</strong> {{ data['date'] }}</p>
+                        <button class="btn btn-info px-4" onclick="copyToClipboard('{{ data['date'] }}')">Copy Date</button>
+                        <p class="mt-2"><strong>Time:</strong> {{ data['time'] }}</p>
+                        <button class="btn btn-info px-4" onclick="copyToClipboard('{{ data['time'] }}')">Copy Time</button>
+                        <p class="mt-2"><strong>ISO Format:</strong> {{ data['iso'] }}</p>
+                        <button class="btn btn-primary px-4" onclick="copyToClipboard('{{ data['iso'] }}')">Copy ISO</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container text-center">
+            Developed by <a href="https://www.linkedin.com/in/andrew-c-williams/" target="_blank" class="text-info">Andrew Williams</a>
+        </div>
+    </footer>
+
+    <script>
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+    
+        function removeTimezone(timezone) {
+            const cards = document.querySelectorAll('.card-title');
+            cards.forEach((card) => {
+                if (card.textContent === timezone) {
+                    card.closest('.col-md-4').remove();
+                }
+            });
+        }
+    </script>
+    
+</body>
+</html>

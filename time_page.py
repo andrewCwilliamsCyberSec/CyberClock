@@ -1,105 +1,60 @@
-from flask import Flask, render_template_string
+from flask import Flask, render_template_string, request, session, redirect, url_for
 import datetime
 import pytz
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'some-secret-key'  # you can change this key
+
+DEFAULT_TIMEZONES = {
+    "UTC": "UTC",
+    "India Standard Time": "Asia/Kolkata",
+    "Eastern Time (US & Canada)": "US/Eastern",
+    "Central Time (US & Canada)": "US/Central",
+    "Pacific Time (US & Canada)": "US/Pacific",
+    "Mountain Time (US & Canada)": "US/Mountain"
+}
 
 @app.route('/')
 def index():
-    timezones = {
-        "Coordinated Universal Time (UTC)": "UTC",
-        "Indian Standard Time (IST)": "Asia/Kolkata",
-        "Eastern Standard Time (EST)": "US/Eastern",
-        "Central Standard Time (CST)": "US/Central",
-        "Pacific Standard Time (PST)": "US/Pacific",
-        "Mountain Standard Time (MST)": "US/Mountain"
-    }
-    
+    timezones = session.get('timezones', DEFAULT_TIMEZONES)
+    dark_mode = session.get('dark_mode', True)
+    language = session.get('language', 'English')
+
     times_data = {tz_name: get_times_data_in_timezone(tz_str) for tz_name, tz_str in timezones.items()}
-    
-    return render_template_string('''
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Current Times</title>
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/js/bootstrap.min.js"></script>
-            <style>
-                body {
-                    background-color: #343a40;
-                    color: #ffffff;
-                    font-family: 'Arial', sans-serif;
-                }
-                
-                .card {
-                    background-color: #212529;
-                    border-radius: 15px;
-                    transition: transform 0.2s;
-                }
-                
-                .card:hover {
-                    transform: scale(1.05);
-                }
 
-                .card-title {
-                    color: #01b4e4;
-                }
+    return render_template_string(open("template.html", encoding='utf-8').read(),
+                                  times_data=times_data, 
+                                  dark_mode=dark_mode,
+                                  language=language,
+                                  available_timezones=list(pytz.all_timezones))
 
-                .btn {
-                    margin: 3px;
-                    border-radius: 20px;
-                    transition: background-color 0.2s;
-                }
+@app.route('/toggle_theme', methods=['POST'])
+def toggle_theme():
+    session['dark_mode'] = not session.get('dark_mode', True)
+    return redirect(url_for('index'))
 
-                .btn-primary:hover {
-                    background-color: #0056b3;
-                }
+@app.route('/set_language', methods=['POST'])
+def set_language():
+    session['language'] = request.form.get('language', 'English')
+    return redirect(url_for('index'))
 
-                .btn-info:hover {
-                    background-color: #016c9a;
-                }
-            </style>
-            <script>
-                function copyToClipboard(text) {
-                    const textarea = document.createElement('textarea');
-                    textarea.value = text;
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textarea);
-                }
-            </script>
-        </head>
-        <body>
-            <div class="container mt-5">
-                <h1 class="text-center mb-5">Current Times</h1>
-                <div class="row">
-                    {% for tz_name, data in times_data.items() %}
-                        <div class="col-md-4 mb-4">
-                            <div class="card shadow">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">{{ tz_name }}</h5>
-                                    <p><strong>Date:</strong> {{ data['date'] }}</p>
-                                    <button class="btn btn-info px-4" onclick="copyToClipboard('{{ data['date'] }}')">Copy Date</button>
-                                    <p class="mt-2"><strong>Time:</strong> {{ data['time'] }}</p>
-                                    <button class="btn btn-info px-4" onclick="copyToClipboard('{{ data['time'] }}')">Copy Time</button>
-                                    <p class="mt-2"><strong>ISO Format:</strong> {{ data['iso'] }}</p>
-                                    <button class="btn btn-primary px-4" onclick="copyToClipboard('{{ data['iso'] }}')">Copy ISO</button>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </body>
-        </html>
-    ''', times_data=times_data)
+@app.route('/add_timezone', methods=['POST'])
+def add_timezone():
+    tz = request.form.get('timezone')
+    if tz and tz not in session.get('timezones', DEFAULT_TIMEZONES):
+        session['timezones'] = {**session.get('timezones', DEFAULT_TIMEZONES), tz: tz}
+    return redirect(url_for('index'))
+
+@app.route('/remove_timezone', methods=['POST'])
+def remove_timezone():
+    tz = request.form.get('timezone')
+    if tz and tz in session.get('timezones', DEFAULT_TIMEZONES):
+        session['timezones'].pop(tz, None)
+    return redirect(url_for('index'))
 
 def get_times_data_in_timezone(tz_name):
     """Return the current date, time, and ISO format in the given timezone."""
     local_time = datetime.datetime.now(pytz.timezone(tz_name))
-    
     return {
         'date': local_time.strftime('%Y-%m-%d'),
         'time': local_time.strftime('%H:%M:%S'),
