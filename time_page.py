@@ -7,12 +7,12 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     timezones = {
-        "UTC": "UTC",
-        "India Time": "Asia/Kolkata",
-        "Eastern Standard Time": "US/Eastern",
-        "Central Standard Time": "US/Central",
-        "Pacific Time": "US/Pacific",
-        "Salt Lake City Time": "US/Mountain"
+        "Coordinated Universal Time (UTC)": "UTC",
+        "Indian Standard Time (IST)": "Asia/Kolkata",
+        "Eastern Standard Time (EST)": "US/Eastern",
+        "Central Standard Time (CST)": "US/Central",
+        "Pacific Standard Time (PST)": "US/Pacific",
+        "Mountain Standard Time (MST)": "US/Mountain"
     }
     
     times_data = {tz_name: get_times_data_in_timezone(tz_str) for tz_name, tz_str in timezones.items()}
