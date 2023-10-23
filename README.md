@@ -1,6 +1,6 @@
 # ⏰ CyberClock: A Timezone Converter Tailored for Cybersecurity Professionals
 
-**CyberClock** 🌍 streamlines time conversions across global time zones, enabling cybersecurity teams to correlate events and respond to incidents swiftly and effectively. One of its standout features is the ability to quickly copy and paste the date, time, or full ISO format for any displayed timezone. Crafted with ❤️ by Andrew Williams, it's an indispensable tool for Security Operations Centers and incident response teams worldwide.
+**CyberClock** 🌍 streamlines time conversions across global time zones, enabling cybersecurity teams to correlate events and respond to incidents swiftly and effectively. One of its standout features is quickly copying and pasting the date, time, or full ISO format for any displayed timezone. Crafted by Andrew Williams (KG5PYX), it's an indispensable tool for Security Operations Centers and incident response teams worldwide.
 
 🔗 [LinkedIn Profile of Andrew Williams](https://www.linkedin.com/in/andrew-c-williams/)
 
