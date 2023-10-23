@@ -67,17 +67,3 @@ For significant changes, please open an issue first to discuss your intentions a
 
 📜 License
 MIT
-
-Changes:
-template.html:
-html
-Copy code
-<!-- Updated template.html content here -->
-time_page.py:
-python
-Copy code
-# Updated time_page.py content here
-csharp
-Copy code
-
-Simply copy and paste this Markdown content into your README.md file to have it fully u
