@@ -1,6 +1,6 @@
-# ⏰ CyberClock: A Timezone Converter Tailored for Cybersecurity Professionals
+# ⏰ CyberClock: A Timezone Converter for Cybersecurity Reporting
 
-**CyberClock** 🌍 streamlines time conversions across global time zones, enabling cybersecurity teams to correlate events and respond to incidents swiftly and effectively. One of its standout features is quickly copying and pasting the date, time, or full ISO format for any displayed timezone. Crafted by Andrew Williams, it's an indispensable tool for Security Operations Centers and incident response teams worldwide.
+**CyberClock** 🌍 streamlines time conversions across global time zones, crucial for precise cybersecurity report writing. By enabling teams to correlate events and respond to incidents with pinpoint temporal accuracy, it ensures the integrity and reliability of time-sensitive security documents. One of its standout features is quickly copying and pasting the date, time, or full ISO format for any displayed timezone. Crafted with ❤️ by Andrew Williams, this tool has become indispensable for Security Operations Centers and incident response teams worldwide.
 
 🔗 [LinkedIn Profile of Andrew Williams](https://www.linkedin.com/in/andrew-c-williams/)
 
@@ -17,6 +17,7 @@ To install these dependencies, use the following command:
 
 ```bash
 pip install Flask pytz
+```
 
 ## 🛠️ Modifying Timezones
 
