@@ -21,23 +21,23 @@ pip install Flask pytz
 ```
 
 🛠️ Modifying Timezones
-To add or remove time zones from the application:
-
-Navigate to the time_page.py file.
+1. To add or remove time zones from the application:
+2. Navigate to the time_page.py file.
 
 Locate the timezones dictionary within the index() function:
-
-python
+```python
 Copy code
 timezones = {
     "UTC": "UTC",
     "India Time": "Asia/Kolkata",
     ...
 }
-To add a new timezone, simply add a new key-value pair to the dictionary:
-python
-Copy code
+```
+3. To add a new timezone, simply add a new key-value pair to the dictionary:
+```python
 "Your Timezone Name": "Your_Timezone_String"
+```
+
 To remove a timezone, delete the corresponding key-value pair from the dictionary.
 Please remember to make sure that the timezone strings are valid according to the pytz library.
 
