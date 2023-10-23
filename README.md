@@ -42,10 +42,12 @@ To remove a timezone, delete the corresponding key-value pair from the dictionar
 Please remember to make sure that the timezone strings are valid according to the pytz library.
 
 🚀 Setup
+
 📦 Clone the repository:
-bash
+```bash
 Copy code
 git clone https://github.com/andrewCwilliamsCyberSec/CyberClock.git
+```
 🔧 Navigate into the repository directory and install the required packages:
 bash
 Copy code
